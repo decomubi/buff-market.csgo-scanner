@@ -84,8 +84,8 @@ async function buffGoodsList({ search = "", pageNum = 1, pageSize = 20, minPrice
     page_size: pageSize,
     search: search || undefined,
     sort_by: "price.desc",
-    ...(minPriceCny != null && { price_min: minPriceCny }),
-    ...(maxPriceCny != null && { price_max: maxPriceCny }),
+    // NOTE: Removed price_min/price_max from BUFF API - BUFF returns 0 items with these filters
+    // We'll filter by price client-side instead
   };
   
   console.log("BUFF request params:", JSON.stringify(params));
@@ -233,6 +233,11 @@ export async function handler(event) {
             : 0;
 
         const buffPriceUsd = Number((buffPriceCny * fx).toFixed(2));
+        
+        // Client-side price filtering (BUFF API doesn't support price filters reliably)
+        if (minPriceCny != null && buffPriceCny < minPriceCny) return null;
+        if (maxPriceCny != null && buffPriceCny > maxPriceCny) return null;
+        
         const quantity = it?.sell_num ?? it?.sell_count ?? it?.goods_info?.sell_num ?? 0;
         const image =
           normalizeUrl(it?.goods_info?.icon_url) ||

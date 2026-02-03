@@ -78,7 +78,7 @@ async function buffFetch(path, params = {}) {
 
 // minPriceCny / maxPriceCny are in CNY fen (integer, 100 = 1 CNY).
 async function buffGoodsList({ search = "", pageNum = 1, pageSize = 20, minPriceCny, maxPriceCny } = {}) {
-  const data = await buffFetch("/api/market/goods", {
+  const params = {
     game: "csgo",
     page_num: pageNum,
     page_size: pageSize,
@@ -86,7 +86,11 @@ async function buffGoodsList({ search = "", pageNum = 1, pageSize = 20, minPrice
     sort_by: "sell_num.desc",
     ...(minPriceCny != null && { price_min: minPriceCny }),
     ...(maxPriceCny != null && { price_max: maxPriceCny }),
-  });
+  };
+  
+  console.log("BUFF request params:", JSON.stringify(params));
+  const data = await buffFetch("/api/market/goods", params);
+  console.log("BUFF response code:", data?.code, "items count:", data?.data?.items?.length || 0);
 
   return data?.data?.items || [];
 }

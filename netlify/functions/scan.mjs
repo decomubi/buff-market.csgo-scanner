@@ -82,7 +82,7 @@ async function buffGoodsList({ search = "", pageNum = 1, pageSize = 20, minPrice
     game: "csgo",
     page_num: pageNum,
     page_size: pageSize,
-    search: search || undefined,
+    search,
     sort_by: "price.desc",
     // NOTE: Removed price_min/price_max from BUFF API - BUFF returns 0 items with these filters
     // We'll filter by price client-side instead

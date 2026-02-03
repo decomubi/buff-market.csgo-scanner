@@ -83,7 +83,7 @@ async function buffGoodsList({ search = "", pageNum = 1, pageSize = 20, minPrice
     page_num: pageNum,
     page_size: pageSize,
     search: search || undefined,
-    sort_by: "sell_num.desc",
+    sort_by: "price.desc",
     ...(minPriceCny != null && { price_min: minPriceCny }),
     ...(maxPriceCny != null && { price_max: maxPriceCny }),
   };

@@ -34,7 +34,7 @@ const App = () => {
   const [fx, setFx] = useState(0.14);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(20);
-  const [minPrice, setMinPrice] = useState("0.10");
+  const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
